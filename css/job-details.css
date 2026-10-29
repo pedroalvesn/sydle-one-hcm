@@ -1,0 +1,1224 @@
+.job-wizard {
+    filter: drop-shadow(0 5px 12px rgba(31, 41, 55, 0.08));
+}
+
+.wizard-step {
+    position: relative;
+    display: flex;
+    min-height: 76px;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.75rem 2rem;
+    border: 0;
+    background: #e9e3ef;
+    color: #6b7280;
+    clip-path: polygon(0 0, calc(100% - 26px) 0, 100% 50%, calc(100% - 26px) 100%, 0 100%, 26px 50%);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: color 0.25s ease, background-color 0.25s ease, filter 0.25s ease, transform 0.25s ease;
+}
+
+.wizard-step:first-child {
+    clip-path: polygon(0 0, calc(100% - 26px) 0, 100% 50%, calc(100% - 26px) 100%, 0 100%);
+}
+
+.wizard-step + .wizard-step {
+    margin-left: -18px;
+}
+
+.wizard-step:hover,
+.wizard-step:focus-visible {
+    z-index: 1;
+    background: #ded2e9;
+    color: #5a009f;
+    outline: none;
+}
+
+.wizard-step:active {
+    transform: scale(0.98);
+}
+
+.wizard-step-active,
+.wizard-step-active:hover,
+.wizard-step-active:focus-visible {
+    background: #5a009f;
+    color: white;
+}
+
+.wizard-step i {
+    font-size: 1.15rem;
+}
+
+.wizard-panel:not([hidden]) {
+    animation: wizard-panel-enter 0.35s ease both;
+}
+
+@keyframes wizard-panel-enter {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.job-form-section {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: 2rem;
+    align-items: start;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.job-section-description {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.job-section-icon {
+    display: flex;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex: 0 0 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.85rem;
+    background: #f0e6fa;
+    color: #5a009f;
+    font-size: 1.1rem;
+}
+
+.job-section-description h3,
+.candidate-list-heading h3 {
+    margin: 0;
+    color: #111827;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.job-section-description p {
+    margin: 0.5rem 0 0;
+    color: #6b7280;
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.job-fields-card {
+    display: grid;
+    gap: 0.65rem;
+    padding: 1.25rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    background: white;
+    box-shadow: 0 1px 3px rgba(17, 24, 39, 0.04);
+}
+
+.job-fields-card label {
+    color: #374151;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.job-fields-card input,
+.job-fields-card select {
+    width: 100%;
+    min-height: 2.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.6rem;
+    background-color: white;
+    padding: 0.65rem 0.8rem;
+    color: #1f2937;
+    font: inherit;
+    font-size: 0.9rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.job-fields-card input:focus,
+.job-fields-card select:focus {
+    border-color: #5a009f;
+    box-shadow: 0 0 0 3px rgba(90, 0, 159, 0.12);
+    outline: none;
+}
+
+.job-fields-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.job-fields-grid > div {
+    display: grid;
+    gap: 0.65rem;
+}
+
+.job-fields-grid-full {
+    grid-column: 1 / -1;
+}
+
+.candidates-mode main {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.candidates-mode .job-wizard {
+    margin-bottom: 1rem;
+}
+
+.candidates-mode .job-details-footer {
+    display: none;
+}
+
+.candidates-workspace {
+    display: grid;
+    width: 100%;
+    height: calc(100vh - 14rem);
+    min-height: 25rem;
+    grid-template-columns: minmax(17rem, 1fr) minmax(0, 2fr);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 4px 18px rgba(17, 24, 39, 0.05);
+}
+
+.candidate-list-panel {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    border-right: 1px solid #e5e7eb;
+    background: #fff;
+}
+
+.candidate-list-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.25rem 0.8rem;
+}
+
+.candidate-count {
+    display: inline-flex;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: #f0e6fa;
+    color: #5a009f;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.candidate-tabs {
+    display: flex;
+    gap: 1.25rem;
+    padding: 0 1.25rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.candidate-tab {
+    position: relative;
+    padding: 0.7rem 0 0.8rem;
+    border: 0;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.candidate-tab:hover,
+.candidate-tab:focus-visible {
+    color: #5a009f;
+    outline: none;
+}
+
+.candidate-tab-active {
+    color: #5a009f;
+}
+
+.candidate-tab-active::after {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    border-radius: 2px 2px 0 0;
+    background: #5a009f;
+    content: "";
+}
+
+.candidate-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 1rem 1rem 0.75rem;
+    color: #9ca3af;
+}
+
+.candidate-search i {
+    position: absolute;
+    left: 0.85rem;
+    font-size: 0.85rem;
+}
+
+.candidate-search input {
+    width: 100%;
+    min-height: 2.65rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.7rem;
+    background: #f9fafb;
+    padding: 0.65rem 0.75rem 0.65rem 2.4rem;
+    color: #1f2937;
+    font: inherit;
+    font-size: 0.85rem;
+}
+
+.candidate-search input:focus {
+    border-color: #5a009f;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(90, 0, 159, 0.1);
+    outline: none;
+}
+
+.candidate-list {
+    min-height: 0;
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.25rem 0.65rem 0.75rem;
+}
+
+.candidate-list-item {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.85rem 0.65rem;
+    border: 0;
+    border-radius: 0.75rem;
+    background: #fff;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.18s ease;
+}
+
+.candidate-list-item:hover,
+.candidate-list-item:focus-visible,
+.candidate-list-item[aria-pressed="true"] {
+    background: #f7f2fb;
+    outline: none;
+}
+
+.candidate-avatar {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.candidate-avatar-list {
+    width: 2.9rem;
+    height: 2.9rem;
+    font-size: 0.9rem;
+}
+
+.candidate-list-copy {
+    display: grid;
+    min-width: 0;
+    flex: 1;
+    gap: 0.3rem;
+}
+
+.candidate-list-name {
+    overflow: hidden;
+    color: #111827;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.candidate-list-meta {
+    overflow: hidden;
+    color: #6b7280;
+    font-size: 0.7rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.candidate-list-arrow {
+    color: #9ca3af;
+    font-size: 0.75rem;
+}
+
+.candidate-list-empty {
+    margin: 1.5rem 0.75rem;
+    color: #6b7280;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.candidate-detail-panel {
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: #fff;
+}
+
+.candidate-welcome {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    color: #6b7280;
+    text-align: center;
+}
+
+.candidate-welcome p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.candidate-welcome-art {
+    position: relative;
+    display: flex;
+    width: 12rem;
+    height: 10rem;
+    align-items: center;
+    justify-content: center;
+    color: #5a009f;
+}
+
+.welcome-art-orbit {
+    position: absolute;
+    width: 9rem;
+    height: 9rem;
+    border: 1px dashed #d8c5e8;
+    border-radius: 50%;
+}
+
+.welcome-art-card,
+.welcome-art-person,
+.welcome-art-sparkle {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #eee6f5;
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(66, 26, 96, 0.1);
+}
+
+.welcome-art-card {
+    width: 4.5rem;
+    height: 5.5rem;
+    transform: translate(-1.3rem, 0.2rem) rotate(-8deg);
+    font-size: 2rem;
+}
+
+.welcome-art-person {
+    width: 4.25rem;
+    height: 4.25rem;
+    transform: translate(1.7rem, 0.8rem);
+    background: #f2eafb;
+    font-size: 1.8rem;
+}
+
+.welcome-art-sparkle {
+    width: 2.3rem;
+    height: 2.3rem;
+    transform: translate(3.2rem, -2.7rem);
+    color: #f0a936;
+}
+
+.candidate-details {
+    height: 100%;
+    overflow-y: auto;
+    padding: 1.5rem clamp(1.25rem, 3vw, 2.5rem) 2rem;
+}
+
+.candidate-detail-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 0 1.4rem;
+}
+
+.candidate-avatar-detail {
+    width: 3.75rem;
+    height: 3.75rem;
+    font-size: 1.1rem;
+}
+
+.candidate-detail-header h3 {
+    margin: 0;
+    color: #111827;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.candidate-detail-header p {
+    margin: 0.35rem 0 0;
+    color: #6b7280;
+    font-size: 0.8rem;
+}
+
+.candidate-detail-section {
+    padding: 1.35rem 0;
+    border-top: 1px solid #e5e7eb;
+}
+
+.candidate-detail-section h4 {
+    margin: 0 0 0.85rem;
+    color: #1f2937;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.candidate-overview {
+    margin: 0;
+    color: #4b5563;
+    font-size: 0.875rem;
+    line-height: 1.8;
+}
+
+.candidate-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: 1.25rem 0 0;
+}
+
+.candidate-facts div {
+    padding: 0.85rem;
+    border: 1px solid #f0edf3;
+    border-radius: 0.75rem;
+    background: #fcfbfd;
+}
+
+.candidate-facts dt {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: #6b7280;
+    font-size: 0.72rem;
+}
+
+.candidate-facts dt i {
+    color: #7c3aad;
+}
+
+.candidate-facts dd {
+    margin: 0.45rem 0 0;
+    color: #1f2937;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.compatibility-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.25rem;
+    border: 1px solid #ede4f5;
+    border-radius: 1rem;
+    background: linear-gradient(120deg, #fbf8fe, #fff);
+}
+
+.compatibility-chart {
+    display: grid;
+    width: 8rem;
+    height: 8rem;
+    flex: 0 0 8rem;
+    place-items: center;
+    border-radius: 50%;
+    background: conic-gradient(#7b2cbf 0deg, #c084fc 250deg, #e8d8f5 360deg);
+    box-shadow: 0 8px 20px rgba(90, 0, 159, 0.15);
+}
+
+.compatibility-chart-center {
+    display: flex;
+    width: 6.35rem;
+    height: 6.35rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.compatibility-chart-center strong {
+    color: #5a009f;
+    font-size: 1.5rem;
+    line-height: 1.1;
+}
+
+.compatibility-chart-center span {
+    margin-top: 0.2rem;
+    color: #6b7280;
+    font-size: 0.65rem;
+}
+
+.compatibility-copy strong {
+    color: #31104b;
+    font-size: 1rem;
+}
+
+.compatibility-copy p {
+    margin: 0.4rem 0 0.75rem;
+    color: #6b7280;
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.compatibility-copy > span {
+    color: #7b2cbf;
+    font-size: 0.73rem;
+    font-weight: 600;
+}
+
+.compatibility-copy > span i {
+    margin-right: 0.25rem;
+}
+
+.candidate-continue-button {
+    display: flex;
+    min-height: 2.8rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    margin: 1.25rem 0 0 auto;
+    padding: 0.7rem 1.2rem;
+    border: 0;
+    border-radius: 0.7rem;
+    background: #5a009f;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.candidate-continue-button:hover,
+.candidate-continue-button:focus-visible {
+    background: #490082;
+    outline: none;
+}
+
+.candidate-continue-button:active {
+    transform: scale(0.98);
+}
+
+.candidate-next-page {
+    height: 100%;
+    overflow-y: auto;
+    padding: 1.25rem;
+}
+
+.candidate-next-page[hidden] {
+    display: none;
+}
+
+.candidate-next-page-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.75rem;
+    border: 0;
+    border-radius: 0.6rem;
+    background: transparent;
+    color: #5a009f;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.candidate-next-page-back:hover,
+.candidate-next-page-back:focus-visible {
+    background: #f7f2fb;
+    outline: none;
+}
+
+.candidate-next-page-content {
+    display: flex;
+    min-height: calc(100% - 2.5rem);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.candidate-next-page-content h3 {
+    margin: 1rem 0 0;
+    color: #111827;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.candidate-next-page-content p {
+    margin: 0.5rem 0 0;
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.proposal-view {
+    display: grid;
+    min-height: calc(100% - 2.5rem);
+    place-items: center;
+    padding: 1.5rem 1rem;
+}
+
+.proposal-view[hidden],
+.proposal-success[hidden] {
+    display: none;
+}
+
+.proposal-card {
+    width: min(100%, 30rem);
+    padding: clamp(1.5rem, 5vw, 2.75rem);
+    border: 1px solid #eee4f5;
+    border-radius: 1.5rem;
+    background: linear-gradient(145deg, #fff 20%, #faf6fd 100%);
+    text-align: center;
+    box-shadow: 0 18px 50px rgba(67, 24, 99, 0.12);
+}
+
+.proposal-heart {
+    display: grid;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0 auto 1rem;
+    place-items: center;
+    border-radius: 1.1rem;
+    background: #f0e6fa;
+    color: #7b2cbf;
+    font-size: 1.4rem;
+    animation: proposal-heartbeat 1.8s ease-in-out infinite;
+}
+
+.proposal-eyebrow {
+    margin: 0;
+    color: #7b2cbf;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.proposal-card h3 {
+    margin: 0.65rem 0 0;
+    color: #31104b;
+    font-size: clamp(1.35rem, 4vw, 1.8rem);
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.proposal-message {
+    max-width: 24rem;
+    margin: 0.85rem auto 0;
+    color: #6b6280;
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.proposal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.85rem;
+    margin-top: 1.75rem;
+}
+
+.proposal-button {
+    display: inline-flex;
+    min-width: 7rem;
+    min-height: 2.9rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.25rem;
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.proposal-button:focus-visible {
+    outline: 3px solid rgba(123, 44, 191, 0.3);
+    outline-offset: 3px;
+}
+
+.proposal-button:active {
+    transform: scale(0.97);
+}
+
+.proposal-button-yes {
+    background: #5a009f;
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(90, 0, 159, 0.2);
+}
+
+.proposal-button-yes:hover {
+    background: #490082;
+    box-shadow: 0 8px 20px rgba(90, 0, 159, 0.28);
+}
+
+.proposal-button-no {
+    border-color: #e5e7eb;
+    background: #fff;
+    color: #6b7280;
+}
+
+.proposal-button-no:hover {
+    border-color: #d1d5db;
+    background: #f9fafb;
+    color: #4b5563;
+}
+
+.proposal-no-wiggle {
+    animation: proposal-no-wiggle 0.42s ease-in-out;
+}
+
+.proposal-no-toast {
+    position: fixed;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    width: max-content;
+    max-width: calc(100vw - 2rem);
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.1rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 1rem;
+    background: #31104b;
+    color: #fff;
+    font-size: clamp(0.95rem, 3vw, 1.15rem);
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 18px 60px rgba(31, 12, 47, 0.32);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, calc(-50% + 0.75rem)) scale(0.96);
+}
+
+.proposal-no-toast[hidden] {
+    display: none;
+}
+
+.proposal-no-toast i {
+    color: #e9b8ff;
+}
+
+.proposal-no-toast-visible {
+    animation: proposal-no-toast-life 1.9s ease forwards;
+}
+
+.proposal-approved {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, #e8fff2, #c8f7dc);
+}
+
+.proposal-success {
+    position: relative;
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 2rem;
+    text-align: center;
+}
+
+.success-checkmark {
+    position: relative;
+    z-index: 1;
+    width: clamp(8rem, 25vw, 12rem);
+    height: clamp(8rem, 25vw, 12rem);
+    filter: drop-shadow(0 12px 20px rgba(22, 101, 52, 0.18));
+    animation: success-pop 0.65s cubic-bezier(0.2, 1.5, 0.5, 1) both;
+}
+
+.success-checkmark svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.success-check-circle {
+    fill: #fff;
+    stroke: #22a65a;
+    stroke-width: 5;
+    stroke-dasharray: 277;
+    stroke-dashoffset: 277;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    animation: success-circle-draw 0.75s 0.1s ease-out forwards;
+}
+
+.success-check-path {
+    fill: none;
+    stroke: #16803c;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 7;
+    stroke-dasharray: 70;
+    stroke-dashoffset: 70;
+    animation: success-check-draw 0.45s 0.75s ease-out forwards;
+}
+
+.proposal-success h3,
+.proposal-success > p {
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    animation: proposal-message-enter 0.6s 1s ease-out forwards;
+}
+
+.proposal-success h3 {
+    max-width: 32rem;
+    margin: 1.5rem 0 0;
+    color: #14532d;
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.proposal-success > p {
+    max-width: 28rem;
+    margin: 0.75rem 0 0;
+    color: #166534;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    animation-delay: 1.2s;
+}
+
+.proposal-confetti {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.proposal-confetti-piece {
+    position: absolute;
+    top: -1rem;
+    left: var(--confetti-x);
+    width: 0.55rem;
+    height: 0.9rem;
+    border-radius: 2px;
+    background: var(--confetti-color);
+    opacity: 0;
+    animation: proposal-confetti-fall var(--confetti-duration) var(--confetti-delay) cubic-bezier(0.2, 0.65, 0.3, 1) forwards;
+}
+
+.proposal-confetti-piece:nth-child(3n) {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+}
+
+.proposal-confetti-piece:nth-child(3n + 1) {
+    transform: rotate(35deg);
+}
+
+@keyframes proposal-heartbeat {
+    0%, 100% { transform: scale(1); }
+    10%, 25% { transform: scale(1.12); }
+    18%, 32% { transform: scale(1); }
+}
+
+@keyframes proposal-no-wiggle {
+    0%, 100% { transform: translateX(0) rotate(0); }
+    20% { transform: translateX(-5px) rotate(-3deg); }
+    40% { transform: translateX(5px) rotate(3deg); }
+    60% { transform: translateX(-4px) rotate(-2deg); }
+    80% { transform: translateX(4px) rotate(2deg); }
+}
+
+@keyframes proposal-no-toast-life {
+    0% { opacity: 0; transform: translate(-50%, calc(-50% + 0.75rem)) scale(0.96); }
+    12%, 68% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, calc(-50% - 0.25rem)) scale(0.98); }
+}
+
+@keyframes proposal-message-enter {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes success-pop {
+    from { opacity: 0; transform: scale(0.55); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes success-circle-draw {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes success-check-draw {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes proposal-confetti-fall {
+    0% { opacity: 0; transform: translateY(0) rotate(0); }
+    8% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(115vh) rotate(760deg); }
+}
+
+.job-details-footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    border-top: 1px solid #e5e7eb;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 -4px 16px rgba(31, 41, 55, 0.06);
+    backdrop-filter: blur(8px);
+}
+
+.job-details-footer .btn-ghost {
+    border-color: #5a009f;
+}
+
+.job-details-footer .btn-ghost:hover,
+.job-details-footer .btn-ghost:focus-visible {
+    background: #490082;
+    color: white;
+}
+
+.save-toast {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 6rem;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    max-width: calc(100vw - 3rem);
+    border: 1px solid #bbf7d0;
+    border-radius: 0.85rem;
+    background: #f0fdf4;
+    padding: 0.9rem 1.1rem;
+    color: #166534;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(17, 24, 39, 0.12);
+    animation: wizard-panel-enter 0.25s ease both;
+}
+
+.save-toast[hidden] {
+    display: none;
+}
+
+.save-toast-error {
+    border-color: #fecaca;
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+@media (max-width: 640px) {
+    .wizard-step {
+        min-height: 68px;
+        gap: 0.45rem;
+        padding: 0.65rem 1.4rem;
+        font-size: 0.75rem;
+    }
+
+    .wizard-step i {
+        font-size: 1rem;
+    }
+
+    .job-form-section {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1.25rem 0;
+    }
+
+    .job-fields-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .job-fields-grid-full {
+        grid-column: auto;
+    }
+
+    .candidates-workspace {
+        height: auto;
+        min-height: calc(100vh - 13rem);
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(15rem, 40vh) minmax(22rem, 1fr);
+    }
+
+    .candidate-list-panel {
+        border-right: 0;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .candidate-detail-panel {
+        min-height: 22rem;
+        min-width: 0;
+        overflow-x: hidden;
+    }
+
+    .candidate-next-page {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
+        padding: 0.75rem;
+    }
+
+    .proposal-view {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        padding: 0.75rem;
+        box-sizing: border-box;
+    }
+
+    .proposal-card {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        padding: 1.25rem 1rem;
+        box-sizing: border-box;
+    }
+
+    .proposal-actions {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+    }
+
+    .proposal-button {
+        min-width: 0;
+        flex: 1 1 6rem;
+    }
+
+    .candidate-facts {
+        grid-template-columns: 1fr;
+    }
+
+    .compatibility-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .save-toast {
+        right: 1rem;
+        bottom: 5.5rem;
+        left: 1rem;
+        max-width: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wizard-step,
+    .job-fields-card input,
+    .job-fields-card select,
+    .candidate-continue-button,
+    .proposal-button {
+        transition: none;
+    }
+
+    .wizard-panel:not([hidden]) {
+        animation: none;
+    }
+
+    .proposal-heart,
+    .proposal-no-wiggle,
+    .proposal-no-toast-visible,
+    .success-checkmark,
+    .success-check-circle,
+    .success-check-path,
+    .proposal-success h3,
+    .proposal-success > p,
+    .proposal-confetti-piece {
+        animation-duration: 0.01ms;
+        animation-delay: 0ms;
+        animation-iteration-count: 1;
+    }
+
+    .success-check-circle,
+    .success-check-path {
+        stroke-dashoffset: 0;
+    }
+
+    .proposal-success h3,
+    .proposal-success > p {
+        opacity: 1;
+    }
+
+    .proposal-no-toast-visible {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Mobile proposal containment - keep the decision card inside its panel. */
+@media (max-width: 640px) {
+    #jobDetailsView,
+    .candidates-workspace,
+    .candidate-detail-panel,
+    .candidate-next-page,
+    .proposal-view,
+    .proposal-card {
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .candidate-next-page {
+        width: 100%;
+        overflow-x: hidden;
+        padding: 12px !important;
+    }
+
+    .proposal-view {
+        width: 100%;
+        padding: 12px !important;
+        overflow-x: hidden;
+    }
+
+    .proposal-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 20px 16px !important;
+    }
+
+    .proposal-actions {
+        width: 100%;
+        max-width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .proposal-button {
+        min-width: 0 !important;
+        flex: 1 1 88px;
+    }
+}

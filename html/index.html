@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYDLE ONE | HCM</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../js/dashboard-tailwind.config.js"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/job-details.css?v=2">
+    <link rel="stylesheet" href="../css/apps.css">
+    <script src="../js/credentials.js"></script>
+    <script src="../js/auth.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen">
+    <section id="loginView" data-spa-view="login" class="login-page min-h-screen bg-gray-50 font-sans text-gray-800">
+        <main class="login-layout flex min-h-screen items-center justify-center px-6 py-12">
+            <section class="login-card w-full max-w-md rounded-2xl bg-white p-8 shadow-xl sm:p-10" aria-labelledby="loginTitle">
+                <div class="mb-8 text-center">
+                    <div class="login-logo mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl text-2xl text-white">
+                        <i class="fa-solid fa-user-lock" aria-hidden="true"></i>
+                    </div>
+                    <p class="text-sm font-bold tracking-wide text-primary">SYDLE ONE <span class="font-normal text-gray-500">| HCM</span></p>
+                    <h1 id="loginTitle" class="mt-3 text-2xl font-bold text-gray-900">Entrar na sua conta</h1>
+                    <p class="mt-2 text-sm text-gray-500">Informe seu email para acessar o painel.</p>
+                </div>
+                <form id="loginForm" novalidate>
+                    <label for="email" class="mb-2 block text-sm font-semibold text-gray-700">Email</label>
+                    <div class="relative">
+                        <i class="fa-regular fa-envelope pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+                        <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="emailError" placeholder="voce@empresa.com" class="w-full rounded-xl border border-gray-200 py-3 pl-11 pr-4 text-sm outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10">
+                    </div>
+                    <p id="emailError" class="mt-2 min-h-5 text-sm text-red-600" role="alert" aria-live="polite"></p>
+                    <button type="submit" class="login-button mt-5 flex w-full items-center justify-center gap-2 rounded-xl py-3 font-semibold text-white transition">
+                        <span>Entrar</span>
+                        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+                </form>
+            </section>
+        </main>
+    </section>
+
+    <section id="dashboardView" data-spa-view="dashboard" class="hidden h-screen overflow-hidden bg-gray-50">
+        <div class="flex h-full">
+            <button id="dashboardSidebarBackdrop" class="dashboard-sidebar-backdrop" type="button" aria-label="Fechar menu"></button>
+            <aside id="dashboardSidebar" class="dashboard-sidebar z-10 flex h-full w-72 shrink-0 flex-col border-r border-gray-100 bg-white shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+                <div class="flex-1 space-y-1 overflow-y-auto px-4 py-6">
+                    <div class="relative">
+                        <button aria-controls="sydleDropdown" aria-expanded="false" onclick="toggleDropdown('sydleDropdown')" class="group flex w-full items-center justify-between rounded-xl p-3 font-bold text-gray-900 transition-colors hover:bg-gray-50">
+                            <span class="text-[15px] tracking-tight">SYDLE ONE <span class="font-normal text-primary">| HCM</span></span>
+                            <i id="icon-sydle" class="fa-solid fa-chevron-down text-xs text-gray-400 transition-transform duration-300"></i>
+                        </button>
+                        <div id="sydleDropdown" class="dropdown-content">
+                            <div class="dropdown-inner flex flex-col space-y-1">
+                                <a href="#" data-dashboard-page="Perfil" class="dashboard-menu-link flex items-center gap-3 rounded-lg p-2.5 text-sm"><i class="fa-regular fa-id-badge w-5"></i> Perfil</a>
+                                <a href="#login" id="logoutLink" class="dashboard-menu-link dashboard-menu-link-danger flex items-center gap-3 rounded-lg p-2.5 text-sm"><i class="fa-solid fa-arrow-right-from-bracket w-5"></i> Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4 border-b border-gray-100 pb-4">
+                        <div class="relative">
+                            <button aria-controls="appsDropdown" aria-expanded="false" onclick="toggleDropdown('appsDropdown')" class="group flex w-full items-center justify-between rounded-xl p-3 font-medium text-gray-700 transition-colors hover:bg-gray-50">
+                                <span class="flex items-center gap-3"><i class="fa-solid fa-layer-group w-5 text-lg text-primary"></i> Apps</span>
+                                <i id="icon-apps" class="fa-solid fa-chevron-down text-xs text-gray-400 transition-transform duration-300"></i>
+                            </button>
+                            <div id="appsDropdown" class="dropdown-content">
+                                <div class="dropdown-inner flex flex-col space-y-1">
+                                    <a href="#apps?app=erp" class="dashboard-menu-link rounded-lg p-2 text-sm">Sydle ERP</a>
+                                    <a href="#apps?app=crm" class="dashboard-menu-link rounded-lg p-2 text-sm">Sydle CRM</a>
+                                    <a href="#apps?app=service-desk" class="dashboard-menu-link rounded-lg p-2 text-sm">Sydle Service Desk</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-3 pb-1 pt-2"><p id="loggedInUserName" class="text-xs font-semibold uppercase tracking-wider text-gray-400"></p></div>
+                    <a href="#" data-dashboard-page="Painel" aria-current="page" class="dashboard-menu-link sidebar-link-active flex items-center gap-3 rounded-xl p-3 font-medium"><i class="fa-solid fa-house w-5 text-center"></i><span>Painel</span></a>
+                    <a href="#" data-dashboard-page="Eu" class="dashboard-menu-link flex items-center gap-3 rounded-xl p-3 font-medium"><i class="fa-solid fa-user w-5 text-center text-lg"></i><span>Eu</span></a>
+                    <a href="#" data-dashboard-page="Ausências" class="dashboard-menu-link flex items-center gap-3 rounded-xl p-3 font-medium"><i class="fa-solid fa-umbrella-beach w-5 text-center"></i><span>Ausências</span></a>
+                    <a href="#" data-dashboard-page="Folha de ponto" class="dashboard-menu-link flex items-center gap-3 rounded-xl p-3 font-medium"><i class="fa-regular fa-clock w-5 text-center"></i><span>Folha de ponto</span></a>
+                    <div class="mt-4 border-t border-gray-100 px-3 pb-1 pt-6"><p class="text-xs font-semibold uppercase tracking-wider text-gray-400">A sua empresa</p></div>
+                    <a href="#" data-dashboard-page="Colaboradores" class="dashboard-menu-link flex items-center gap-3 rounded-xl p-3 font-medium"><i class="fa-solid fa-user-group w-5 text-center"></i><span>Colaboradores</span></a>
+                    <a href="#" data-dashboard-page="Calendário" class="dashboard-menu-link flex items-center gap-3 rounded-xl p-3 font-medium"><i class="fa-regular fa-calendar-alt w-5 text-center"></i><span>Calendário</span></a>
+                    <a href="#jobs" class="flex items-center gap-3 rounded-xl p-3 font-medium text-gray-600 transition-all hover:bg-gray-100 hover:text-gray-900"><i class="fa-solid fa-user-plus w-5 text-center"></i><span>Recrutamento</span></a>
+                    <a href="#" data-dashboard-page="Relógio de ponto" class="dashboard-menu-link flex items-center gap-3 rounded-xl p-3 font-medium"><i class="fa-solid fa-stopwatch w-5 text-center"></i><span>Relógio de ponto</span></a>
+                    <a href="#" data-dashboard-page="Relatórios" class="dashboard-menu-link flex items-center gap-3 rounded-xl p-3 font-medium"><i class="fa-solid fa-chart-column w-5 text-center"></i><span>Relatórios</span></a>
+                </div>
+            </aside>
+            <main class="h-full flex-1 overflow-y-auto p-8 lg:p-10">
+                <header class="dashboard-main-header mb-8 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <button id="dashboardMenuButton" class="dashboard-menu-button" type="button" aria-controls="dashboardSidebar" aria-expanded="false" aria-label="Abrir menu lateral"><i class="fa-solid fa-bars"></i></button>
+                        <h1 id="welcomeMessage" class="text-2xl font-bold text-gray-900"></h1>
+                    </div>
+                    <div class="dashboard-current-date text-sm font-medium text-gray-500"><i class="fa-regular fa-calendar mr-2"></i><span id="currentDate"></span></div>
+                </header>
+                <div id="dashboardGrid" class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
+                    <div class="flex h-full flex-col justify-between rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+                        <div>
+                            <h2 class="mb-1 text-base font-semibold text-gray-900">Relógio de ponto</h2>
+                            <p class="mb-6 text-xs text-gray-500">Total de horas trabalhadas hoje</p>
+                            <div class="mb-8 flex items-baseline gap-2">
+                                <span class="text-5xl font-bold tracking-tight text-gray-900"><span id="workedHours">00</span><span class="text-2xl font-medium text-gray-400">h</span></span>
+                                <span class="text-5xl font-bold tracking-tight text-gray-900"><span id="workedMinutes">00</span><span class="text-2xl font-medium text-gray-400">m</span></span>
+                            </div>
+                        </div>
+                        <button data-dashboard-page-target="Relógio de ponto" class="btn-outline flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold"><i class="fa-solid fa-fingerprint"></i>Registrar ponto</button>
+                    </div>
+                    <div class="flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+                        <h2 class="mb-6 text-base font-semibold text-gray-900">Próximas ausências</h2>
+                        <div class="grid flex-1 grid-cols-2 gap-4">
+                            <div><h3 class="mb-4 flex h-12 items-center justify-center border-b border-gray-100 text-center text-xs font-bold uppercase tracking-wider text-gray-400">Hoje</h3><div class="flex h-24 items-center justify-center text-center"><p class="text-sm font-medium text-gray-400">Não há ausências</p></div></div>
+                            <div class="border-l border-gray-100 pl-4"><h3 class="mb-4 flex h-12 items-center justify-center border-b border-gray-100 text-center text-xs font-bold uppercase tracking-wider text-gray-400">Próximos 7 dias</h3><div class="flex h-24 items-center justify-center text-center"><p class="text-sm font-medium text-gray-400">Não há ausências</p></div></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md xl:row-span-2">
+                        <div class="mb-6 flex items-center justify-between"><h2 class="text-base font-semibold text-gray-900">Tarefas pendentes</h2><span class="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-bold text-primary">3</span></div>
+                        <div class="flex flex-1 flex-col gap-4">
+                            <label class="group flex cursor-pointer items-start gap-4 rounded-xl border border-gray-100 p-4 transition-all hover:border-primary/30 hover:bg-[#faf5ff]"><input type="checkbox" class="mt-0.5 h-5 w-5 cursor-pointer rounded border-gray-300 text-primary accent-primary focus:ring-primary"><span><span class="text-sm font-semibold text-gray-900 transition-colors group-hover:text-primary">Aprovar férias de Maria Costa</span><span class="mt-1 block text-xs text-gray-500">Solicitado em 18 Out · Departamento de Design</span></span></label>
+                            <label class="group flex cursor-pointer items-start gap-4 rounded-xl border border-gray-100 p-4 transition-all hover:border-primary/30 hover:bg-[#faf5ff]"><input type="checkbox" class="mt-0.5 h-5 w-5 cursor-pointer rounded border-gray-300 text-primary accent-primary focus:ring-primary"><span><span class="text-sm font-semibold text-gray-900 transition-colors group-hover:text-primary">Revisar currículos para Vaga de Desenvolvedor</span><span class="mt-1 block text-xs text-gray-500">12 novos candidatos aguardando triagem</span></span></label>
+                            <label class="group flex cursor-pointer items-start gap-4 rounded-xl border border-gray-100 p-4 transition-all hover:border-primary/30 hover:bg-[#faf5ff]"><input type="checkbox" class="mt-0.5 h-5 w-5 cursor-pointer rounded border-gray-300 text-primary accent-primary focus:ring-primary"><span><span class="text-sm font-semibold text-gray-900 transition-colors group-hover:text-primary">Avaliação de Desempenho - Q3</span><span class="mt-1 block text-xs text-gray-500">Prazo final: 31 de Outubro</span></span></label>
+                        </div>
+                    </div>
+                    <div class="flex h-full flex-col justify-between rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+                        <div><h2 class="mb-4 text-base font-semibold text-gray-900">Próximos eventos</h2><div class="mb-6 rounded-xl border border-dashed border-gray-200 bg-gray-50/50 p-5 text-center"><p class="text-sm leading-relaxed text-gray-500">Não há eventos futuros. Se houver uma ocasião especial a chegar, é possível criar um evento para ela agora.</p></div></div>
+                        <button data-dashboard-page-target="Calendário" class="btn-outline flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold"><i class="fa-solid fa-plus"></i>Criar evento</button>
+                    </div>
+                    <div class="flex h-full flex-col justify-between rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+                        <div><h2 class="mb-6 text-base font-semibold text-gray-900">Próximos feriados</h2><div class="flex items-center gap-5 rounded-xl p-3 transition-colors hover:bg-gray-50"><div class="min-w-[64px] rounded-lg border border-primary/10 bg-[#f0e6fa] p-2 text-center"><div class="text-[10px] font-bold uppercase tracking-wide text-primary">Nov</div><div class="mt-1 text-2xl font-bold leading-none text-primary">02</div></div><div><p class="text-sm font-bold text-gray-900">Dia de Finados</p><p class="mt-0.5 text-xs text-gray-500">Sábado · Feriado Nacional</p></div></div></div>
+                        <button data-dashboard-page-target="Calendário" class="btn-outline mt-6 flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold"><i class="fa-regular fa-calendar"></i>Ver no calendário</button>
+                    </div>
+                </div>
+                <section id="constructionState" class="hidden min-h-[60vh] flex-col items-center justify-center text-center" aria-live="polite">
+                    <div class="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#f0e6fa] text-3xl text-primary"><i class="fa-solid fa-person-digging" aria-hidden="true"></i></div>
+                    <h2 class="text-2xl font-bold text-gray-900">Em construção</h2>
+                    <p class="mt-2 max-w-md text-sm text-gray-500">Esta seção estará disponível em breve.</p>
+                </section>
+            </main>
+        </div>
+    </section>
+
+    <section id="jobsView" data-spa-view="jobs" class="hidden min-h-screen bg-gray-50">
+        <header class="sticky top-0 z-50 bg-primary text-white shadow-md">
+            <div class="container mx-auto flex h-20 items-center justify-between px-6">
+                <a href="#dashboard" class="dashboard-link w-56 text-xl font-bold tracking-tight" aria-label="Voltar ao painel SYDLE ONE HCM" title="Voltar ao painel">
+                    <i class="dashboard-link-icon fa-solid fa-arrow-left text-sm" aria-hidden="true"></i><span>SYDLE ONE <span class="opacity-70">| HCM</span></span>
+                </a>
+            </div>
+        </header>
+        <main class="container mx-auto px-6 pb-20 pt-16">
+            <div class="mb-12 flex flex-col items-center text-center">
+                <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#f0e6fa] text-3xl text-primary shadow-sm"><i class="fa-solid fa-file-contract"></i></div>
+                <h1 class="mb-3 text-3xl font-bold text-gray-900">Ofertas de trabalho</h1>
+                <p class="max-w-md text-gray-500">Lista de todos os seus anúncios de emprego. Pode filtrá-los por departamento ou status.</p>
+            </div>
+            <div class="mx-auto max-w-5xl overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
+                <div class="jobs-list-toolbar flex gap-4 border-b border-gray-100 bg-gray-50/50 p-5">
+                    <div class="relative w-48">
+                        <select id="jobFilter" class="w-full cursor-pointer appearance-none rounded-lg border border-gray-200 bg-white py-2.5 pl-4 pr-10 text-sm text-gray-700 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
+                            <option value="" selected>Filtro</option><option value="ti">Tecnologia</option><option value="design">Design</option><option value="vendas">Vendas</option>
+                        </select>
+                        <i class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-500 fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </div>
+                    <div class="relative flex-1">
+                        <i class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 fa-solid fa-search" aria-hidden="true"></i>
+                        <input type="text" id="searchInput" placeholder="Pesquisar..." class="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-sm text-gray-700 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
+                    </div>
+                </div>
+                <div class="jobs-table-wrapper overflow-x-auto">
+                    <div id="jobsMobileCards" class="jobs-mobile-cards" aria-label="Lista de ofertas de trabalho"></div>
+                    <table class="jobs-list-table w-full border-collapse text-left">
+                        <thead><tr class="border-b border-gray-100 bg-gray-50 text-xs uppercase tracking-wider text-gray-500">
+                            <th class="cursor-pointer px-6 py-4 font-medium transition-colors hover:bg-gray-100" onclick="handleSort('title')"><div class="flex items-center gap-2">Ofertas de trabalho<i class="fa-solid fa-sort text-gray-400" id="icon-title"></i></div></th>
+                            <th class="cursor-pointer px-6 py-4 font-medium transition-colors hover:bg-gray-100" onclick="handleSort('timestamp')"><div class="flex items-center gap-2">Criado em<i class="fa-solid fa-sort text-gray-400" id="icon-timestamp"></i></div></th>
+                            <th class="cursor-pointer px-6 py-4 font-medium transition-colors hover:bg-gray-100" onclick="handleSort('candidates')"><div class="flex items-center gap-2">Candidatos<i class="fa-solid fa-sort text-gray-400" id="icon-candidates"></i></div></th>
+                            <th class="cursor-pointer px-6 py-4 font-medium transition-colors hover:bg-gray-100" onclick="handleSort('status')"><div class="flex items-center gap-2">Status<i class="fa-solid fa-sort text-gray-400" id="icon-status"></i></div></th>
+                            <th class="w-32 px-6 py-4 text-right font-medium" aria-label="Ações"></th>
+                        </tr></thead>
+                        <tbody id="tableBody" class="text-sm"></tbody>
+                    </table>
+                </div>
+                <div id="emptyState" class="hidden p-12 text-center text-gray-500"><i class="fa-solid fa-inbox mb-3 text-4xl text-gray-300"></i><p>Nenhuma vaga encontrada.</p></div>
+            </div>
+        </main>
+    </section>
+
+    <section id="jobDetailsView" data-spa-view="job-details" class="hidden min-h-screen bg-gray-50 text-gray-800">
+        <header class="sticky top-0 z-50 bg-primary text-white shadow-md">
+            <div class="relative container mx-auto flex h-20 items-center justify-between px-6">
+                <a id="backToJobsButton" href="#jobs" class="btn-ghost flex h-10 w-10 items-center justify-center rounded-lg" aria-label="Voltar para a lista de ofertas" title="Voltar para a lista"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></a>
+                <h1 id="jobPageTitle" class="absolute left-1/2 max-w-[45%] -translate-x-1/2 truncate text-center text-lg font-semibold sm:text-xl">Namorado da Carla</h1>
+            </div>
+        </header>
+        <main class="container mx-auto px-5 pb-20 pt-10 sm:px-6 sm:pt-14">
+            <nav class="job-wizard mx-auto mb-10 flex max-w-3xl" aria-label="Etapas da oferta">
+                <button type="button" class="wizard-step wizard-step-active" id="detailsStepButton" aria-controls="detailsPanel" aria-current="step"><i class="fa-solid fa-file-lines" aria-hidden="true"></i><span>Detalhes da oferta</span></button>
+                <button type="button" class="wizard-step" id="candidatesStepButton" aria-controls="candidatesPanel"><i class="fa-solid fa-users" aria-hidden="true"></i><span>Candidatos</span></button>
+            </nav>
+            <section id="detailsPanel" class="wizard-panel mx-auto max-w-6xl" aria-labelledby="detailsHeading">
+                <h2 id="detailsHeading" class="sr-only">Detalhes da oferta</h2>
+                <section class="job-form-section">
+                    <div class="job-section-description"><div class="job-section-icon"><i class="fa-solid fa-briefcase" aria-hidden="true"></i></div><div><h3>Informações básicas</h3><p>Preencha as informações básicas para esta oferta de trabalho. É assim que ela será vista pelos candidatos.</p></div></div>
+                    <div class="job-fields-card"><label for="jobTitle">Título da oferta</label><input id="jobTitle" name="jobTitle" type="text" value="Namorado da Carla"></div>
+                </section>
+                <section class="job-form-section">
+                    <div class="job-section-description"><div class="job-section-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div><div><h3>Local de Trabalho</h3><p>Selecione o escritório ao qual a oferta de trabalho pertence ou a opção 'Trabalho remoto'.</p></div></div>
+                    <div class="job-fields-card"><label for="jobLocation">Escritório ou modalidade</label><select id="jobLocation" name="jobLocation"><option value="Fortaleza, CE">Fortaleza, CE</option><option value="São Paulo, SP">São Paulo, SP</option><option value="Rio de Janeiro, RJ">Rio de Janeiro, RJ</option><option value="Curitiba, PR">Curitiba, PR</option><option value="Trabalho remoto">Trabalho remoto</option></select></div>
+                </section>
+                <section class="job-form-section">
+                    <div class="job-section-description"><div class="job-section-icon"><i class="fa-solid fa-list-check" aria-hidden="true"></i></div><div><h3>Detalhes da vaga</h3><p>Adicione detalhes sobre esta oferta de trabalho para que os candidatos possam aprender mais sobre ela.</p></div></div>
+                    <div class="job-fields-card job-fields-grid">
+                        <div><label for="contractType">Tipo de contrato</label><select id="contractType" name="contractType"><option value="">Selecione o tipo de contrato</option><option selected>Tempo indeterminado</option><option>Temporário</option><option>Estágio</option><option>Freelancer</option></select></div>
+                        <div><label for="workSchedule">Horário</label><select id="workSchedule" name="workSchedule"><option value="">Selecione o horário</option><option selected>Tempo integral</option><option>Meio período</option><option>Flexível</option></select></div>
+                        <div class="job-fields-grid-full"><label for="annualSalary">Salário anual</label><select id="annualSalary" name="annualSalary"><option selected>Beijinhos e chameguinhos</option><option>Carinho todo mês</option><option>A combinar com abraços</option></select></div>
+                    </div>
+                </section>
+            </section>
+            <section id="candidatesPanel" class="wizard-panel candidates-workspace" aria-labelledby="candidatesHeading" aria-hidden="true" hidden>
+                <h2 id="candidatesHeading" class="sr-only">Candidatos</h2>
+                <aside class="candidate-list-panel" aria-label="Lista de candidatos">
+                    <div class="candidate-list-heading">
+                        <h3>Candidatos</h3>
+                        <span id="candidateCount" class="candidate-count" aria-live="polite">1</span>
+                    </div>
+                    <div class="candidate-tabs" role="tablist" aria-label="Filtrar candidatos por status">
+                        <button type="button" class="candidate-tab candidate-tab-active" id="activeCandidatesTab" role="tab" aria-selected="true" aria-controls="candidateList" data-candidate-filter="active">Ativos</button>
+                        <button type="button" class="candidate-tab" id="disqualifiedCandidatesTab" role="tab" aria-selected="false" aria-controls="candidateList" data-candidate-filter="disqualified">Desqualificados</button>
+                    </div>
+                    <label class="candidate-search">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                        <input id="candidateSearch" type="search" placeholder="Filtrar por nome" autocomplete="off">
+                    </label>
+                    <div id="candidateList" class="candidate-list" role="tabpanel" aria-labelledby="activeCandidatesTab">
+                        <button type="button" class="candidate-list-item" id="pedroCandidate" aria-pressed="false">
+                            <span class="candidate-avatar candidate-avatar-list" data-candidate-avatar aria-hidden="true">PA</span>
+                            <span class="candidate-list-copy">
+                                <span class="candidate-list-name">Pedro Alves</span>
+                                <span class="candidate-list-meta">Adicionado há 1 mês <span aria-hidden="true">-</span> Em avaliação</span>
+                            </span>
+                            <i class="fa-solid fa-chevron-right candidate-list-arrow" aria-hidden="true"></i>
+                        </button>
+                        <p id="candidateListEmpty" class="candidate-list-empty" hidden>Nenhum candidato encontrado.</p>
+                    </div>
+                </aside>
+                <section class="candidate-detail-panel" aria-label="Detalhes do candidato">
+                    <div id="candidateWelcome" class="candidate-welcome">
+                        <div class="candidate-welcome-art" aria-hidden="true">
+                            <span class="welcome-art-orbit"></span>
+                            <span class="welcome-art-card"><i class="fa-regular fa-file-lines"></i></span>
+                            <span class="welcome-art-person"><i class="fa-solid fa-user"></i></span>
+                            <span class="welcome-art-sparkle"><i class="fa-solid fa-sparkles"></i></span>
+                        </div>
+                        <p>Selecione um candidato para ver seus detalhes</p>
+                    </div>
+                    <article id="candidateDetails" class="candidate-details" hidden aria-labelledby="candidateDetailName">
+                        <header class="candidate-detail-header">
+                            <span class="candidate-avatar candidate-avatar-detail" data-candidate-avatar aria-hidden="true">PA</span>
+                            <div>
+                                <h3 id="candidateDetailName">Pedro Alves</h3>
+                                <p>Adicionado há 1 mês</p>
+                            </div>
+                        </header>
+                        <section class="candidate-detail-section" aria-labelledby="candidateBasicsHeading">
+                            <h4 id="candidateBasicsHeading">Informações básicas</h4>
+                            <p class="candidate-overview">
+                                Dedicado a construir um relacionamento leve, divertido e duradouro. Mantendo uma rotina ativa de musculação, nos momentos livres gosta de jogar videogame, acompanhar Fórmula 1, escutar música eletrônica e metalcore e não dispenso uma boa cerveja no fim de semana. Apreciador de rolês gastronômicos, gosta de viajar e transformar programas simples em boas histórias. Procura alguém para compartilhar risadas, conversas sinceras, apoio mútuo e muitos planos — sempre com carinho, respeito e espaço para cada um continuar sendo quem é.
+                            </p>
+                            <dl class="candidate-facts">
+                                <div><dt><i class="fa-solid fa-ruler-vertical" aria-hidden="true"></i> Altura</dt><dd>1,74 m</dd></div>
+                                <div><dt><i class="fa-solid fa-dumbbell" aria-hidden="true"></i> Estilo de vida</dt><dd>Ativo · musculação</dd></div>
+                                <div><dt><i class="fa-solid fa-heart" aria-hidden="true"></i> Interesses</dt><dd>Games, F1 e música</dd></div>
+                                <div><dt><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Localização</dt><dd>Fortaleza, CE</dd></div>
+                            </dl>
+                        </section>
+                        <section class="candidate-detail-section candidate-compatibility" aria-labelledby="candidateCompatibilityHeading">
+                            <h4 id="candidateCompatibilityHeading">Compatibilidade</h4>
+                            <div class="compatibility-card">
+                                <div class="compatibility-chart" role="img" aria-label="100% de compatibilidade com a vaga Namorado da Carla">
+                                    <div class="compatibility-chart-center"><strong>100%</strong><span>compatível</span></div>
+                                </div>
+                                <div class="compatibility-copy">
+                                    <strong>Combinação perfeita!</strong>
+                                    <p>Pedro tem tudo a ver com a vaga de Namorado da Carla.</p>
+                                    <span><i class="fa-solid fa-heart" aria-hidden="true"></i> Compatibilidade com a vaga</span>
+                                </div>
+                            </div>
+                            <button type="button" id="candidateContinueButton" class="candidate-continue-button">
+                                <span>Continuar</span>
+                                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        </section>
+                    </article>
+                    <section id="candidateNextPage" class="candidate-next-page" hidden aria-labelledby="candidateNextPageHeading">
+                        <button type="button" id="candidateNextPageBackButton" class="candidate-next-page-back">
+                            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                            <span>Voltar aos detalhes</span>
+                        </button>
+                        <div class="candidate-next-page-content">
+                            <div class="job-section-icon"><i class="fa-solid fa-person-digging" aria-hidden="true"></i></div>
+                            <h3 id="candidateNextPageHeading">Em construção</h3>
+                            <p>Esta etapa estará disponível em breve.</p>
+                        </div>
+                        <div id="proposalView" class="proposal-view" hidden>
+                            <div class="proposal-card">
+                                <span class="proposal-heart" aria-hidden="true"><i class="fa-solid fa-heart"></i></span>
+                                <!-- <p class="proposal-eyebrow">Uma pergunta importante</p> -->
+                                <h3>Quer namorar comigo?</h3>
+                                <!-- <p class="proposal-message">Prometo boas risadas, apoio nos seus sonhos e escolher um bom lugar para a nossa próxima cerveja.</p> -->
+                                <div class="proposal-actions">
+                                    <button type="button" id="proposalYesButton" class="proposal-button proposal-button-yes">
+                                        <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                                        <span>Sim</span>
+                                    </button>
+                                    <button type="button" id="proposalNoButton" class="proposal-button proposal-button-no">Não</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="proposalSuccess" class="proposal-success" role="status" aria-live="polite" hidden>
+                            <div id="proposalConfetti" class="proposal-confetti" aria-hidden="true"></div>
+                            <div class="success-checkmark" aria-hidden="true">
+                                <svg viewBox="0 0 100 100" focusable="false">
+                                    <circle class="success-check-circle" cx="50" cy="50" r="44"></circle>
+                                    <path class="success-check-path" d="M28 51l14 14 30-31"></path>
+                                </svg>
+                            </div>
+                            <h3 id="proposalSuccessHeading" tabindex="-1">Pedro foi aprovado para namorado da Carla!</h3>
+                            <!-- <p>Que essa nova história seja cheia de carinho, parceria e momentos felizes.</p> -->
+                        </div>
+                    </section>
+                    <div id="proposalNoToast" class="proposal-no-toast" role="status" aria-live="polite" aria-atomic="true" hidden>
+                        <i class="fa-solid fa-heart-crack" aria-hidden="true"></i>
+                        <span>Foi bom enquanto durou, Pedro Alves!</span>
+                    </div>
+                </section>
+            </section>
+        </main>
+        <footer class="job-details-footer"><div class="container mx-auto flex justify-end px-5 py-4 sm:px-6"><button id="saveJobButton" type="button" class="btn-ghost flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i><span>Salvar alterações</span></button></div></footer>
+        <div id="saveToast" class="save-toast" role="status" aria-live="polite" aria-atomic="true" hidden><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="saveToastMessage"></span></div>
+    </section>
+
+    <section id="appsView" data-spa-view="apps" class="hidden min-h-screen bg-gray-50 font-sans text-gray-800">
+        <div id="legacyAppConstruction" class="min-h-screen bg-gray-50" hidden>
+            <header class="sticky top-0 z-50 bg-primary text-white shadow-md"><div class="container mx-auto flex h-20 items-center px-6"><a href="#dashboard" class="dashboard-link w-56 text-xl font-bold tracking-tight" aria-label="Voltar ao painel SYDLE ONE"><i class="dashboard-link-icon fa-solid fa-arrow-left text-sm" aria-hidden="true"></i><span>SYDLE ONE <span class="opacity-70">| HCM</span></span></a></div></header>
+            <main class="container mx-auto flex min-h-[calc(100vh-5rem)] flex-col items-center justify-center px-6 py-16 text-center"><div class="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-[#f0e6fa] text-4xl text-primary shadow-sm"><i class="fa-solid fa-person-digging" aria-hidden="true"></i></div><h1 class="text-3xl font-bold text-gray-900">Em construção</h1><p class="mt-3 max-w-md text-gray-500">A área do <span id="appName">aplicativo</span> estará disponível em breve.</p></main>
+        </div>
+        <div id="serviceDeskShell" class="service-desk-shell">
+            <header class="service-desk-app-header sticky top-0 z-50 bg-primary text-white shadow-md">
+                <a href="#dashboard" class="dashboard-link" aria-label="Voltar ao painel SYDLE ONE"><i class="dashboard-link-icon fa-solid fa-arrow-left" aria-hidden="true"></i><span>SYDLE ONE <span class="opacity-70">| HCM</span></span></a>
+            </header>
+            <aside id="serviceDeskSidebar" class="service-desk-sidebar" aria-label="Menu do Service Desk">
+                <div class="service-desk-brand"><span class="service-desk-brand-icon"><i class="fa-solid fa-headset" aria-hidden="true"></i></span><div><strong>SYDLE ONE</strong><small>Service Desk</small></div></div>
+                <nav class="service-desk-nav">
+                    <button type="button" class="service-desk-nav-item service-desk-nav-active" data-service-page="dashboard"><i class="fa-solid fa-table-columns"></i><span>Painel</span></button>
+                    <button type="button" class="service-desk-nav-item" data-service-page="tickets"><i class="fa-solid fa-ticket"></i><span>Chamados</span></button>
+                    <button type="button" class="service-desk-nav-item" data-service-page="services"><i class="fa-solid fa-layer-group"></i><span>Serviços</span></button>
+                    <button type="button" class="service-desk-nav-item" data-service-page="my-tickets"><i class="fa-solid fa-user-check"></i><span>Meus chamados</span></button>
+                </nav>
+            </aside>
+            <main class="service-desk-main">
+                <header class="service-desk-header"><div class="service-desk-header-title"><button id="serviceDeskMenuButton" class="service-desk-menu-button" type="button" aria-controls="serviceDeskSidebar" aria-expanded="false" aria-label="Abrir menu do Service Desk"><i class="fa-solid fa-bars"></i></button><div><p>SYDLE ONE | Service Desk</p><h1 id="serviceDeskPageTitle">Painel</h1></div></div><button type="button" class="service-desk-profile" aria-label="Perfil do usuário"><span id="serviceDeskUserInitials">CV</span><div><strong id="serviceDeskUserName">Carla Vieira</strong><small>Solicitante</small></div></button></header>
+                <div class="service-desk-content">
+                    <section id="serviceDashboard" class="service-page service-page-active" data-service-panel="dashboard">
+                        <div class="service-welcome"><div><h2>Central de atendimento</h2><p>Acompanhe o volume e o andamento dos chamados de hoje.</p></div><span id="serviceDashboardDate"></span></div>
+                        <div class="service-dashboard-grid">
+                            <article class="service-metric metric-purple"><span><i class="fa-solid fa-user-plus"></i></span><div><strong>42</strong><p>Chamados atribuídos</p></div></article>
+                            <article class="service-metric metric-amber"><span><i class="fa-solid fa-clock"></i></span><div><strong>18</strong><p>Chamados pendentes</p></div></article>
+                            <article class="service-metric metric-red"><span><i class="fa-solid fa-triangle-exclamation"></i></span><div><strong>7</strong><p>Chamados atrasados</p></div></article>
+                            <article class="service-metric metric-blue"><span><i class="fa-solid fa-circle-check"></i></span><div><strong>64</strong><p>Chamados solucionados</p></div></article>
+                            <article class="service-metric metric-green"><span><i class="fa-solid fa-box-archive"></i></span><div><strong>126</strong><p>Chamados fechados</p></div></article>
+                        </div>
+                    </section>
+                    <section id="serviceTickets" class="service-page" data-service-panel="tickets" hidden>
+                        <div class="service-section-heading"><div><h2>Chamados</h2><p>Visualize e pesquise todas as solicitações.</p></div></div>
+                        <div class="service-table-toolbar"><label><i class="fa-solid fa-magnifying-glass"></i><input id="ticketSearch" type="search" placeholder="Pesquisar chamados"></label><select id="ticketTypeFilter" aria-label="Filtrar por tipo"><option value="">Todos os tipos</option><option>Incidente</option><option>Solicitação</option><option>Problema</option></select></div>
+                        <div class="service-table-wrap"><table><thead><tr><th>ID</th><th>Título</th><th>Descrição</th><th>Tipo</th><th>Requerente</th><th>Data de abertura</th></tr></thead><tbody id="ticketsTableBody"></tbody></table></div>
+                    </section>
+                    <section id="serviceServices" class="service-page" data-service-panel="services" hidden>
+                        <div class="service-section-heading"><div><h2>Catálogo de serviços</h2><p>Escolha uma área para encontrar o atendimento ideal.</p></div></div>
+                        <div id="serviceCatalog" class="service-catalog-grid"></div>
+                        <div id="serviceSubmenu" class="service-submenu" hidden>
+                            <button type="button" id="serviceBackButton" class="service-back-button"><i class="fa-solid fa-arrow-left"></i> Voltar aos serviços</button>
+                            <div class="service-submenu-heading"><span id="serviceSubmenuIcon"></span><div><h2 id="serviceSubmenuTitle"></h2><p>Selecione uma opção para abrir o chamado.</p></div></div>
+                            <div id="serviceSubmenuGrid" class="service-submenu-grid"></div>
+                        </div>
+                        <div id="serviceRequestForm" class="service-request" hidden>
+                            <button type="button" id="serviceRequestBack" class="service-back-button"><i class="fa-solid fa-arrow-left"></i> Voltar às opções</button>
+                            <div class="service-form-heading"><span><i class="fa-solid fa-file-lines"></i></span><div><p id="serviceRequestCategory"></p><h2 id="serviceRequestTitle"></h2></div></div>
+                            <form id="ticketRequestForm">
+                                <label>Título<input name="title" required placeholder="Informe um título curto"></label>
+                                <label>Descrição<textarea name="description" required rows="5" placeholder="Descreva o que está acontecendo"></textarea></label>
+                                <div class="service-form-row"><label>Tipo<select name="type" required><option>Incidente</option><option>Solicitação</option><option>Problema</option></select></label><label>Prioridade<select name="priority"><option>Baixa</option><option selected>Normal</option><option>Alta</option><option>Urgente</option></select></label></div>
+                                <button type="submit" class="service-submit-button"><i class="fa-solid fa-paper-plane"></i> Enviar chamado</button>
+                            </form>
+                        </div>
+                    </section>
+                    <section id="serviceMyTickets" class="service-page" data-service-panel="my-tickets" hidden>
+                        <div class="service-section-heading"><div><h2>Meus chamados</h2><p>Chamados registrados com o seu usuário.</p></div></div>
+                        <div class="service-table-toolbar"><label><i class="fa-solid fa-magnifying-glass"></i><input id="myTicketSearch" type="search" placeholder="Pesquisar meus chamados"></label></div>
+                        <div class="service-table-wrap"><table><thead><tr><th>ID</th><th>Título</th><th>Descrição</th><th>Tipo</th><th>Requerente</th><th>Data de abertura</th></tr></thead><tbody id="myTicketsTableBody"></tbody></table></div>
+                    </section>
+                </div>
+            </main>
+        </div>
+        <div id="crmShell" class="crm-shell">
+            <header class="service-desk-app-header sticky top-0 z-50 bg-primary text-white shadow-md">
+                <a href="#dashboard" class="dashboard-link" aria-label="Voltar ao painel SYDLE ONE"><i class="dashboard-link-icon fa-solid fa-arrow-left" aria-hidden="true"></i><span>SYDLE ONE <span class="opacity-70">| HCM</span></span></a>
+            </header>
+            <aside id="crmSidebar" class="crm-sidebar" aria-label="Menu do CRM">
+                <div class="service-desk-brand"><span class="service-desk-brand-icon"><i class="fa-solid fa-chart-simple" aria-hidden="true"></i></span><div><strong>SYDLE ONE</strong><small>CRM</small></div></div>
+                <nav class="service-desk-nav">
+                    <button type="button" class="service-desk-nav-item crm-nav-active" data-crm-page="sales"><i class="fa-solid fa-handshake"></i><span>Vendas</span></button>
+                    <button type="button" class="service-desk-nav-item" data-crm-page="activities"><i class="fa-solid fa-list-check"></i><span>Atividades</span></button>
+                    <button type="button" class="service-desk-nav-item" data-crm-page="management"><i class="fa-solid fa-chart-line"></i><span>Gerenciamento de vendas</span></button>
+                </nav>
+            </aside>
+            <main class="crm-main">
+                <header class="service-desk-header"><div class="crm-header-title"><button id="crmMenuButton" class="crm-menu-button" type="button" aria-controls="crmSidebar" aria-expanded="false" aria-label="Abrir menu do CRM"><i class="fa-solid fa-bars"></i></button><div><p>SYDLE ONE | CRM</p><h1 id="crmPageTitle">Vendas</h1></div></div></header>
+                <div class="crm-content">
+                    <section class="crm-page crm-page-active" data-crm-panel="sales"><div class="crm-section-heading"><div><h2>Pipeline de vendas</h2><p>Arraste os negócios entre as etapas do funil.</p></div><button class="crm-add-button" type="button"><i class="fa-solid fa-plus"></i> Novo negócio</button></div><div id="crmKanban" class="crm-kanban"></div></section>
+                    <section class="crm-page" data-crm-panel="activities" hidden><div class="crm-section-heading"><div><h2>Atividades</h2><p>Acompanhe os próximos contatos da equipe.</p></div></div><div class="service-table-wrap crm-table-wrap"><table><thead><tr><th>Concluída</th><th>Título</th><th>Nome do contato</th><th>Email</th><th>Telefone</th></tr></thead><tbody id="crmActivitiesBody"></tbody></table></div></section>
+                    <section class="crm-page" data-crm-panel="management" hidden><div class="crm-section-heading"><div><h2>Gerenciamento de vendas</h2><p>Perspectiva mensal de faturamento, lucro e metas.</p></div></div><div class="crm-chart-card"><div class="crm-chart-summary"><div><span>Faturamento previsto</span><strong>R$ 2,84 mi</strong></div><div><span>Lucro previsto</span><strong>R$ 684 mil</strong></div></div><div id="crmChart" class="crm-chart" aria-label="Gráfico mensal de faturamento e lucro"></div></div><div class="crm-spreadsheet"><div class="crm-spreadsheet-title"><strong>Plano financeiro</strong><span>Valores mensais</span></div><table><thead><tr><th>Mês</th><th>Faturamento</th><th>Custos</th><th>Lucro</th><th>Meta</th></tr></thead><tbody id="crmFinanceBody"></tbody></table></div></section>
+                </div>
+            </main>
+        </div>
+        <div id="serviceDeskToast" class="service-desk-toast" role="status" aria-live="polite" hidden><span><i class="fa-solid fa-circle-check"></i></span><div><strong>Chamado enviado com sucesso</strong><small>Sua solicitação foi registrada.</small></div></div>
+    </section>
+
+    <script src="../js/login.js?v=20261023-spa2"></script>
+    <script src="../js/dashboard.js?v=20261023-spa2"></script>
+    <script src="../js/script.js?v=20261023-spa2"></script>
+    <script src="../js/job-details.js?v=20261027-proposal"></script>
+    <script src="../js/app.js?v=20261023-spa2"></script>
+    <script src="../js/apps.js?v=20261029-service-desk"></script>
+</body>
+</html>
