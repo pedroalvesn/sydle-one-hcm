@@ -100,16 +100,110 @@ function getDisplayName(email) {
     return name;
 }
 
+const profileDefaults = {
+    'pedro@gmail.com': {
+        name: 'Pedro Alves',
+        email: 'pedro@gmail.com',
+        phone: '(85) 98888-1024',
+        birthdate: '1992-04-18',
+        document: '123.456.789-00',
+        role: 'Analista de Recursos Humanos',
+        department: 'Recursos Humanos'
+    },
+    'carla@gmail.com': {
+        name: 'Carla Vieira',
+        email: 'carla@gmail.com',
+        phone: '(85) 97777-2036',
+        birthdate: '1995-09-07',
+        document: '987.654.321-00',
+        role: 'Especialista de Pessoas',
+        department: 'Recursos Humanos'
+    }
+};
+
+function getInitials(name) {
+    return name.trim().split(/\s+/).filter(Boolean).slice(0, 2)
+        .map(part => part.charAt(0).toLocaleUpperCase('pt-BR')).join('');
+}
+
+function getProfile(userEmail) {
+    const defaults = profileDefaults[userEmail] || profileDefaults['pedro@gmail.com'];
+    try {
+        const stored = JSON.parse(localStorage.getItem(`sydle-profile:${userEmail}`));
+        return stored ? { ...defaults, ...stored } : { ...defaults };
+    } catch (error) {
+        return { ...defaults };
+    }
+}
+
+function updateProfilePreview(event) {
+    if (event.target.id === 'profileName') {
+        document.getElementById('profileDisplayName').textContent = event.target.value;
+        document.getElementById('profileAvatar').textContent = getInitials(event.target.value || 'Usuário');
+    }
+    if (event.target.id === 'profileRole') {
+        document.getElementById('profileDisplayRole').textContent = event.target.value;
+    }
+}
+
+function renderProfile() {
+    const userEmail = window.sydleAuth.getUserEmail();
+    if (!userEmail) return;
+
+    const profile = getProfile(userEmail);
+    const fields = {
+        profileName: profile.name,
+        profileEmail: profile.email,
+        profilePhone: profile.phone,
+        profileBirthdate: profile.birthdate,
+        profileDocument: profile.document,
+        profileRole: profile.role,
+        profileDepartment: profile.department
+    };
+
+    Object.entries(fields).forEach(([id, value]) => {
+        const field = document.getElementById(id);
+        if (field) field.value = value || '';
+    });
+
+    document.getElementById('profileAvatar').textContent = getInitials(profile.name);
+    document.getElementById('profileDisplayName').textContent = profile.name;
+    document.getElementById('profileDisplayRole').textContent = profile.role;
+    document.querySelector('.profile-cover').style.background = userEmail === 'carla@gmail.com'
+        ? 'linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 55%, #6d28d9 100%)'
+        : 'linear-gradient(135deg, #a78bfa 0%, #7c3aed 55%, #5a009f 100%)';
+    document.getElementById('profileSaveStatus').textContent = '';
+
+    profileForm.querySelectorAll('input').forEach(input => {
+        input.removeEventListener('input', updateProfilePreview);
+        input.addEventListener('input', updateProfilePreview);
+    });
+}
+
 function updateDashboardUser() {
     const userEmail = window.sydleAuth.getUserEmail();
     if (!userEmail) {
         return;
     }
 
-    const displayName = getDisplayName(userEmail);
-    document.getElementById('loggedInUserName').textContent = displayName;
-    document.getElementById('welcomeMessage').textContent = `Olá, ${displayName}! 👋`;
+    const profile = getProfile(userEmail);
+    document.getElementById('loggedInUserName').textContent = profile.name;
+    document.getElementById('welcomeMessage').textContent = `Olá, ${profile.name}! 👋`;
 }
+
+const profileForm = document.getElementById('profileForm');
+profileForm?.addEventListener('submit', event => {
+    event.preventDefault();
+    const userEmail = window.sydleAuth.getUserEmail();
+    if (!userEmail) return;
+
+    const profile = Object.fromEntries(new FormData(profileForm).entries());
+    localStorage.setItem(`sydle-profile:${userEmail}`, JSON.stringify(profile));
+    renderProfile();
+    updateDashboardUser();
+    document.getElementById('welcomeMessage').textContent = 'Meu perfil';
+    document.getElementById('profileSaveStatus').textContent = 'Alterações salvas.';
+});
 
 function refreshDashboard() {
     updateDashboardUser();
@@ -121,6 +215,7 @@ setInterval(updateDashboardClock, 1000);
 
 const dashboardGrid = document.getElementById('dashboardGrid');
 const constructionState = document.getElementById('constructionState');
+const profileState = document.getElementById('profileState');
 const dashboardPageLinks = document.querySelectorAll('[data-dashboard-page]');
 const logoutLink = document.getElementById('logoutLink');
 
@@ -141,9 +236,19 @@ function showDashboardPage(pageName) {
     selectedLink.setAttribute('aria-current', 'page');
 
     const isDashboard = pageName === 'Painel';
+    const isProfile = pageName === 'Eu';
     dashboardGrid.classList.toggle('hidden', !isDashboard);
-    constructionState.classList.toggle('hidden', isDashboard);
-    constructionState.classList.toggle('flex', !isDashboard);
+    profileState.classList.toggle('hidden', !isProfile);
+    constructionState.classList.toggle('hidden', isDashboard || isProfile);
+    constructionState.classList.toggle('flex', !isDashboard && !isProfile);
+
+    document.getElementById('welcomeMessage').textContent = isProfile ? 'Meu perfil' : isDashboard ? `Olá, ${getProfile(window.sydleAuth.getUserEmail()).name}! 👋` : pageName;
+    document.querySelector('.dashboard-current-date').classList.toggle('hidden', isProfile);
+    if (isProfile) {
+        renderProfile();
+        const dashboardMain = document.querySelector('#dashboardView main');
+        if (dashboardMain) dashboardMain.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 }
 
 logoutLink.addEventListener('click', event => {
@@ -167,6 +272,8 @@ document.querySelectorAll('[data-dashboard-page-target]').forEach(button => {
 });
 
 window.refreshDashboard = refreshDashboard;
+window.showDashboardHome = () => showDashboardPage('Painel');
+window.showDashboardHome();
 
 const dashboardSidebar = document.getElementById('dashboardSidebar');
 const dashboardMenuButton = document.getElementById('dashboardMenuButton');

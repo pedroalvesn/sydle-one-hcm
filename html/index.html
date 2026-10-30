@@ -136,6 +136,35 @@
                         <button data-dashboard-page-target="Calendário" class="btn-outline mt-6 flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold"><i class="fa-regular fa-calendar"></i>Ver no calendário</button>
                     </div>
                 </div>
+                <section id="profileState" class="profile-state hidden" aria-label="Perfil do usuário">
+                    <div class="profile-card">
+                        <div class="profile-cover" aria-hidden="true"></div>
+                        <div class="profile-avatar-wrap">
+                            <div id="profileAvatar" class="profile-avatar">PA</div>
+                        </div>
+                        <div class="profile-heading">
+                            <div>
+                                <h2 id="profileDisplayName" class="profile-name">Pedro Alves</h2>
+                                <p id="profileDisplayRole" class="profile-role">Analista de Recursos Humanos</p>
+                            </div>
+                        </div>
+                        <form id="profileForm" class="profile-form">
+                            <div class="profile-form-grid">
+                                <label class="profile-field" for="profileName"><span>Nome completo</span><input id="profileName" name="name" type="text" autocomplete="name" required></label>
+                                <label class="profile-field" for="profileEmail"><span>Email</span><input id="profileEmail" name="email" type="email" autocomplete="email" required></label>
+                                <label class="profile-field" for="profilePhone"><span>Telefone</span><input id="profilePhone" name="phone" type="tel" autocomplete="tel"></label>
+                                <label class="profile-field" for="profileBirthdate"><span>Data de nascimento</span><input id="profileBirthdate" name="birthdate" type="date" autocomplete="bday"></label>
+                                <label class="profile-field" for="profileDocument"><span>CPF</span><input id="profileDocument" name="document" type="text" inputmode="numeric" autocomplete="off"></label>
+                                <label class="profile-field" for="profileRole"><span>Cargo</span><input id="profileRole" name="role" type="text"></label>
+                                <label class="profile-field profile-field-wide" for="profileDepartment"><span>Departamento</span><input id="profileDepartment" name="department" type="text" autocomplete="organization"></label>
+                            </div>
+                            <div class="profile-actions">
+                                <span id="profileSaveStatus" class="profile-save-status" role="status" aria-live="polite"></span>
+                                <button class="profile-save-button" type="submit"><i class="fa-solid fa-check" aria-hidden="true"></i>Salvar alterações</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
                 <section id="constructionState" class="hidden min-h-[60vh] flex-col items-center justify-center text-center" aria-live="polite">
                     <div class="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#f0e6fa] text-3xl text-primary"><i class="fa-solid fa-person-digging" aria-hidden="true"></i></div>
                     <h2 class="text-2xl font-bold text-gray-900">Em construção</h2>
@@ -432,10 +461,10 @@
     </section>
 
     <script src="../js/login.js?v=20261023-spa2"></script>
-    <script src="../js/dashboard.js?v=20261023-spa2"></script>
+    <script src="../js/dashboard.js?v=20261030-home"></script>
     <script src="../js/script.js?v=20261023-spa2"></script>
     <script src="../js/job-details.js?v=20261027-proposal"></script>
-    <script src="../js/app.js?v=20261023-spa2"></script>
+    <script src="../js/app.js?v=20261030-home"></script>
     <script src="../js/apps.js?v=20261029-service-desk"></script>
 </body>
 </html>

@@ -74,6 +74,7 @@
 
         if (route === 'dashboard') {
             window.refreshDashboard();
+            if (window.showDashboardHome) window.showDashboardHome();
         } else if (route === 'jobs') {
             window.sydleJobs.render();
         } else if (route === 'job-details') {
