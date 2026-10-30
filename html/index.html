@@ -165,6 +165,87 @@
                         </form>
                     </div>
                 </section>
+                <section id="timesheetState" class="timesheet-state hidden" aria-label="Folha de ponto">
+                    <div class="timesheet-card">
+                        <form id="timesheetFilterForm" class="timesheet-filter-form">
+                            <div class="timesheet-employee-grid">
+                                <label class="timesheet-field timesheet-field-wide" for="timesheetEmployeeName"><span>Colaborador</span><input id="timesheetEmployeeName" type="text" readonly></label>
+                                <label class="timesheet-field" for="timesheetEmployeeEmail"><span>E-mail corporativo</span><input id="timesheetEmployeeEmail" type="text" readonly></label>
+                                <label class="timesheet-field" for="timesheetEmployeeDepartment"><span>Departamento</span><input id="timesheetEmployeeDepartment" type="text" readonly></label>
+                            </div>
+                            <div class="timesheet-period-row">
+                                <div class="timesheet-period-fields">
+                                    <label class="timesheet-field" for="timesheetStartDate"><span>Data inicial</span><input id="timesheetStartDate" name="startDate" type="date" required></label>
+                                    <label class="timesheet-field" for="timesheetEndDate"><span>Data final</span><input id="timesheetEndDate" name="endDate" type="date" required></label>
+                                </div>
+                                <div class="timesheet-actions">
+                                    <button class="timesheet-search-button" type="submit"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>Consultar</button>
+                                    <button id="timesheetPdfButton" class="timesheet-pdf-button" type="button"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i>Gerar PDF</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="timesheet-results-card">
+                        <div class="timesheet-results-heading">
+                            <div><h2>Registros de ponto</h2><p id="timesheetResultsPeriod">Período selecionado</p></div>
+                            <span id="timesheetRecordCount" class="timesheet-record-count"></span>
+                        </div>
+                        <div class="timesheet-table-wrap">
+                            <table class="timesheet-table">
+                                <thead><tr><th>Data</th><th>Entrada</th><th>Intervalo</th><th>Retorno</th><th>Saída</th><th>Último ponto</th><th>Total do dia</th></tr></thead>
+                                <tbody id="timesheetTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <section id="calendarState" class="calendar-state hidden" aria-label="Calendário">
+                    <div class="calendar-toolbar">
+                        <div class="calendar-navigation">
+                            <button id="calendarPrevButton" class="calendar-icon-button" type="button" aria-label="Mês anterior"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+                            <button id="calendarTodayButton" class="calendar-today-button" type="button">Hoje</button>
+                            <button id="calendarNextButton" class="calendar-icon-button" type="button" aria-label="Próximo mês"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+                        </div>
+                        <h2 id="calendarMonthTitle" class="calendar-month-title"></h2>
+                        <button id="calendarAddButton" class="calendar-add-button" type="button"><i class="fa-solid fa-plus" aria-hidden="true"></i>Novo evento</button>
+                    </div>
+                    <div class="calendar-layout">
+                        <div class="calendar-grid-wrap">
+                            <div class="calendar-weekdays" aria-hidden="true"><span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span></div>
+                            <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="Calendário mensal"></div>
+                        </div>
+                        <aside class="calendar-agenda" aria-label="Próximos compromissos">
+                            <div class="calendar-agenda-heading"><div><span>Minha agenda</span><h3>Próximos eventos</h3></div><i class="fa-solid fa-calendar-check" aria-hidden="true"></i></div>
+                            <div id="calendarAgendaList" class="calendar-agenda-list"></div>
+                        </aside>
+                    </div>
+                </section>
+                <section id="clockState" class="clock-state hidden" aria-label="Relógio de ponto">
+                    <div class="clock-page-grid">
+                        <article class="clock-main-card">
+                            <div class="clock-card-heading">
+                                <span class="clock-status"><i class="fa-solid fa-circle" aria-hidden="true"></i>Em andamento</span>
+                                <p id="clockCurrentDate">Hoje</p>
+                            </div>
+                            <div class="clock-digital-time" id="clockDigitalTime">00:00:00</div>
+                            <p class="clock-live-label">Hora atual</p>
+                            <div class="clock-worked-total">
+                                <span>Total de horas trabalhadas hoje</span>
+                                <strong><span id="clockWorkedHours">00</span><small>h</small> <span id="clockWorkedMinutes">00</span><small>m</small></strong>
+                            </div>
+                            <button id="clockPunchButton" class="clock-punch-button" type="button"><i class="fa-solid fa-fingerprint" aria-hidden="true"></i><span>Registrar ponto</span></button>
+                            <p id="clockPunchStatus" class="clock-punch-status" aria-live="polite"></p>
+                        </article>
+                        <article class="clock-summary-card">
+                            <div class="clock-summary-heading"><div><h2>Registros de hoje</h2><p>Resumo das marcações do dia</p></div><span><i class="fa-solid fa-calendar-day" aria-hidden="true"></i></span></div>
+                            <div id="clockPunchList" class="clock-punch-list"></div>
+                            <div class="clock-day-summary">
+                                <div><span>Entrada</span><strong id="clockEntryTime">--:--</strong></div>
+                                <div><span>Intervalo</span><strong>12:00</strong></div>
+                                <div><span>Último ponto</span><strong id="clockLastPunch">--:--</strong></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
                 <section id="constructionState" class="hidden min-h-[60vh] flex-col items-center justify-center text-center" aria-live="polite">
                     <div class="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#f0e6fa] text-3xl text-primary"><i class="fa-solid fa-person-digging" aria-hidden="true"></i></div>
                     <h2 class="text-2xl font-bold text-gray-900">Em construção</h2>
